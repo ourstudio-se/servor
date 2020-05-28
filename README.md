@@ -12,8 +12,6 @@ Most features are disabled by default but you can customize behaviour by passing
 
 <hr>
 
-<img src="https://user-images.githubusercontent.com/1457604/68399629-979e8480-016e-11ea-89b3-0f852a018042.gif" alt="servor" width="800">
-
 ## Features
 
 - 🗂 Serves static content like scripts, styles, images from a given directory
