@@ -1,6 +1,6 @@
 # Servør
 
-> A dependency free dev server for modern web application development
+> A dev server for modern web application development
 
 A very compact but capable static file server with gzip and other useful features to support modern web app development on localhost and over a local network..
 
