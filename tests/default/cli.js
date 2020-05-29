@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 const fs = require("fs");
 const path = require("path");
-const servor = require("../../pkg/dist-node/index.js");
+const ourHttpServer = require("../../pkg/dist-node/index.js");
 
 (async () => {
   const args = process.argv.slice(2);
 
-  const { root, port, ips, url } = await servor.default({
+  const { root, port, ips, url } = await ourHttpServer.default({
     root: args[0],
     port: args[1],
   });

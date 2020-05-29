@@ -1,5 +1,5 @@
 {
-  "name": "our-http-server",
+  "name": "@ourstudio/our-http-server",
   "version": "1.0.0",
   "description": "A dev server for single page app development",
   "repository": "https://github.com/ourstudio-se/servor",

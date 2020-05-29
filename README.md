@@ -9,30 +9,6 @@ Forked from https://github.com/lukejacksonn/servor
 - 🗜 Uses gzip on common filetypes like html, css, js and json
 - 🖥 Redirects all path requests to a single file for frontend routing
 
-## CLI Usage
-
-Run as a terminal command without adding it as a dependency using `npx`:
-
-```s
-npx servor <root> <port>
-```
-
-- `<root>` path to serve static files from (defaults to current directory `.`)
-- `<port>` what port you want to serve the files from (defaults to `8080`)
-
-Example usage with npm scripts in a `package.json` file after running `npm i our-http -D`:
-
-```json
-{
-  "devDependencies": {
-    "our-http-server": "1.0.0"
-  },
-  "scripts": {
-    "start": "ourHttpServer . 8080"
-  }
-}
-```
-
 ## API Usage
 
 Use `our-http-server` programmatically with node by requiring it as a module in your script:
@@ -58,12 +34,12 @@ The `inject` property accepts a string that gets appended to the servers root do
 
 ```js
 const config = require('package.json');
-servor({ inject: `<script>window.pkg=${config}</script>` });
+ourHttpServer({ inject: `<script>window.pkg=${config}</script>` });
 ```
 
 or inject a .html file
 ```js
 const inject = fs.readFileSync(path.join(__dirname, "sample.html"), "binary")
-servor({ inject });
+ourHttpServer({ inject });
 ```
 

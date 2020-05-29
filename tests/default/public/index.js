@@ -1,8 +1,6 @@
-/* SERVOR_TEST_MODULE_INDEX */
-
 import { react, html, css } from 'https://unpkg.com/rplus';
 
-document.title = 'SERVOR_TEST_MODULE_INDEX';
+document.title = 'OUR_HTTP_SERVER_TEST_MODULE_INDEX';
 
 const style = css`
   font-family: 'Roboto', sans-serif;
