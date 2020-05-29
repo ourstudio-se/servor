@@ -18,7 +18,6 @@ Most features are disabled by default but you can customize behaviour by passing
 - 🗜 Uses gzip on common filetypes like html, css, js and json
 - 🖥 Redirects all path requests to a single file for frontend routing
 - 📦 Accepts both HTML and JavaScript files as the root file for a directory
-- 🔎 Discovers freely available ports to start if the default is in use
 
 ## CLI Usage
 
