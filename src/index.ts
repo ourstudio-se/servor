@@ -9,7 +9,6 @@ import getMimeType from "./utils/mimeTypes";
 
 interface Server {
   root: string;
-  fallback: string;
   inject?: string;
   port?: number;
 }
@@ -21,7 +20,6 @@ const envPort = process.env.PORT ? parseInt(process.env.PORT) : undefined;
 
 const Server = async ({
   root: _root = ".",
-  fallback = "index.html",
   inject,
   port: _port,
 }: Server) => {
@@ -83,13 +81,14 @@ const Server = async ({
 
   // Respond to requests without a file extension
 
-  const serveRoute = (res: Response, pathname: string) => {
-    const index = path.join(root, fallback);
+  const serveRoute = (res: Response) => {
+    const index = path.join(root, "index.html");
 
     fs.readFile(index, "binary", (err, file) => {
+      if (err && inject) return sendFile(res, 200, inject, "html");
       if (err) return sendError(res, 500);
       file = file + inject;
-      sendFile(res, 200, file, "html");
+      return sendFile(res, 200, file, "html");
     });
   };
 
@@ -103,7 +102,7 @@ const Server = async ({
       res.setHeader("access-control-allow-origin", "*");
       if (!isRouteRequest(decodedPathname))
         return serveStaticFile(res, decodedPathname);
-      return serveRoute(res, decodedPathname);
+      return serveRoute(res);
     })
     .listen(port);
 

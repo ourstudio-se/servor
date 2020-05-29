@@ -4,9 +4,6 @@
   "description": "A dev server for single page app development",
   "repository": "lukejacksonn/servor",
   "main": "./src/index.ts",
-  "bin": {
-    "servor": "./cli.js"
-  },
   "keywords": [
     "server",
     "spa"
@@ -20,7 +17,9 @@
     "prepare": "npm run type-check",
     "type-check": "tsc --noEmit --skipLibCheck",
     "version": "npm run build",
-    "start": "sudo npm run build && node cli tests index.html 8080"
+    "start": "sudo npm run build && cd tests/default && node cli public 8080",
+    "start:inject": "sudo npm run build && cd tests/inject && node cli public 8080",
+    "start:inject-only": "sudo npm run build && cd tests/inject-only && node cli public 8080"
   },
   "author": "Luke Jackson <lukejacksonn@gmail.com>",
   "license": "MIT",

@@ -24,11 +24,10 @@ Most features are disabled by default but you can customize behaviour by passing
 Run as a terminal command without adding it as a dependency using `npx`:
 
 ```s
-npx servor <root> <fallback> <port>
+npx servor <root> <port>
 ```
 
 - `<root>` path to serve static files from (defaults to current directory `.`)
-- `<fallback>` the file served for all non-file requests (defaults to `index.html`)
 - `<port>` what port you want to serve the files from (defaults to `8080`)
 
 Example usage with npm scripts in a `package.json` file after running `npm i servor -D`:
@@ -39,7 +38,7 @@ Example usage with npm scripts in a `package.json` file after running `npm i ser
     "servor": "4.0.0"
   },
   "scripts": {
-    "start": "servor . index.html 8080"
+    "start": "servor . 8080"
   }
 }
 ```
@@ -52,7 +51,6 @@ Use servor programmatically with node by requiring it as a module in your script
 const servor = require('servor');
 const instance = await servor({
   root: '.',
-  fallback: 'index.html',
   inject: ''
   port: 8080,
 });
@@ -66,7 +64,7 @@ const { url, root, protocol, port, ips } = await servor(config);
 
 ### Inject
 
-The `inject` property accepts a string that gets appended to the servers root document (which is `index.html` by default). This could be used to inject config or extend the development servers behavior and capabilities to suit specific environments.
+The `inject` property accepts a string that gets appended to the servers root document (which is `index.html`). If no `index.html` exist, the injectet property will be served. This could be used to inject config or extend the development servers behavior and capabilities to suit specific environments.
 
 ```js
 const config = require('package.json');
