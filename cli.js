@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const ourHttpServer = required('./index').default;
+const ourHttpServer = required('./dist-node/index').default;
 
 (async () => {
   const args = process.argv.slice(2);

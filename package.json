@@ -1,9 +1,12 @@
 {
   "name": "@ourstudio/our-http-server",
-  "version": "1.0.1-alpha8",
+  "version": "1.0.1-alpha12",
   "description": "A dev server for single page app development",
   "repository": "https://github.com/ourstudio-se/servor",
   "main": "./src/index.ts",
+  "bin": {
+    "our-http-server": "cli.js"
+  },
   "keywords": [
     "server",
     "spa"
@@ -45,7 +48,7 @@
       [
         "@pika/plugin-build-types"
       ],
-      ["@pika/plugin-simple-bin", {"bin": "@ourstudio/our-http-server"}]
+      "cp cli.js pkg"
     ]
   }
 }
