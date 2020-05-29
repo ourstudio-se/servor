@@ -18,11 +18,7 @@ type Response = http.ServerResponse;
 
 const envPort = process.env.PORT ? parseInt(process.env.PORT) : undefined;
 
-const Server = async ({
-  root: _root = ".",
-  inject,
-  port: _port,
-}: Server) => {
+const Server = async ({ root: _root = ".", inject, port: _port }: Server) => {
   let port = _port || envPort || 8080;
   try {
     port = await usePort(port);
@@ -87,7 +83,7 @@ const Server = async ({
     fs.readFile(index, "binary", (err, file) => {
       if (err && inject) return sendFile(res, 200, inject, "html");
       if (err) return sendError(res, 500);
-      file = file + inject;
+      file = inject ? file + inject : file;
       return sendFile(res, 200, file, "html");
     });
   };

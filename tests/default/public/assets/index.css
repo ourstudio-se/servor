@@ -32,10 +32,16 @@ img {
 }
 
 h1 {
-  font-size: 20vmin;
+  font-size: 10vmin;
 }
 
 h2 {
+  color: #6f6f6f;
+  font-size: 4vmin;
+  font-weight: normal;
+}
+
+h3 {
   color: #6f6f6f;
   font-size: 4vmin;
   font-weight: normal;

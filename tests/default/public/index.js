@@ -49,7 +49,7 @@ react.render(
   html`
     <main className=${style}>
       <img src="/assets/exists.png" alt="File that exists" />
-      <h1>servør</h1>
+      <h1>Our Http Server</h1>
       <h2>${location.href}</h2>
     </main>
   `,

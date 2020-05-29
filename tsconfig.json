@@ -9,7 +9,7 @@
     "declaration": true,
     "removeComments": true,
     "esModuleInterop": true,
-    "typeRoots": ["@types", "node_modules/@types"]
+    "typeRoots": ["node_modules/@types"]
   },
-  "include": ["@types", "src/**/*"],
+  "include": ["src/**/*"]
 }

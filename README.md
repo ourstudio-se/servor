@@ -1,23 +1,13 @@
-# Servør
+# Our-server
 
-> A dev server for modern web application development
-
-A very compact but capable static file server with gzip and other useful features to support modern web app development on localhost and over a local network..
-
-Servør can be invoked via the command line or programmatically using the node API.
-
-
-
-Most features are disabled by default but you can customize behaviour by passing positional arguments and flags to enable features.
-
-<hr>
+> A small dev server for modern web application development
+Forked from https://github.com/lukejacksonn/servor
 
 ## Features
 
 - 🗂 Serves static content like scripts, styles, images from a given directory
 - 🗜 Uses gzip on common filetypes like html, css, js and json
 - 🖥 Redirects all path requests to a single file for frontend routing
-- 📦 Accepts both HTML and JavaScript files as the root file for a directory
 
 ## CLI Usage
 
@@ -30,36 +20,36 @@ npx servor <root> <port>
 - `<root>` path to serve static files from (defaults to current directory `.`)
 - `<port>` what port you want to serve the files from (defaults to `8080`)
 
-Example usage with npm scripts in a `package.json` file after running `npm i servor -D`:
+Example usage with npm scripts in a `package.json` file after running `npm i our-http -D`:
 
 ```json
 {
   "devDependencies": {
-    "servor": "4.0.0"
+    "our-http-server": "1.0.0"
   },
   "scripts": {
-    "start": "servor . 8080"
+    "start": "ourHttpServer . 8080"
   }
 }
 ```
 
 ## API Usage
 
-Use servor programmatically with node by requiring it as a module in your script:
+Use `our-http-server` programmatically with node by requiring it as a module in your script:
 
 ```js
-const servor = require('servor');
-const instance = await servor({
+const ourHttpServer = require('our-http-server').default;
+const instance = await ourHttpServer({
   root: '.',
   inject: ''
   port: 8080,
 });
 ```
 
-The `servor` function accepts a config object with optional props assigned the above default values if none are provided. Calling the `servor` function starts up a new server and returns an object describing its configuration.
+The `ourHttpServer` function accepts a config object with optional props assigned the above default values if none are provided. Calling the `ourHttpServer` function starts up a new server and returns an object describing its configuration.
 
 ```js
-const { url, root, protocol, port, ips } = await servor(config);
+const { url, root, protocol, port, ips } = await ourHttpServer(config);
 ```
 
 ### Inject
@@ -77,6 +67,3 @@ const inject = fs.readFileSync(path.join(__dirname, "sample.html"), "binary")
 servor({ inject });
 ```
 
-## Notes
-
-Thanks to all the contributors to this projects so far. If you find a bug please create an issue or if you have an idea for a new feature then fork the project and create a pull request. Let me know how you are using servør [on twitter](https://twitter.com/lukejacksonn).

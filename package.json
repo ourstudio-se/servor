@@ -1,8 +1,8 @@
 {
-  "name": "servor",
-  "version": "4.0.2",
+  "name": "our-http-server",
+  "version": "1.0.0",
   "description": "A dev server for single page app development",
-  "repository": "lukejacksonn/servor",
+  "repository": "https://github.com/ourstudio-se/servor",
   "main": "./src/index.ts",
   "keywords": [
     "server",
@@ -21,7 +21,7 @@
     "start:inject": "sudo npm run build && cd tests/inject && node cli public 8080",
     "start:inject-only": "sudo npm run build && cd tests/inject-only && node cli public 8080"
   },
-  "author": "Luke Jackson <lukejacksonn@gmail.com>",
+  "author": "Ourstudio",
   "license": "MIT",
   "devDependencies": {
     "@pika/pack": "^0.5.0",
@@ -36,12 +36,7 @@
   "@pika/pack": {
     "pipeline": [
       [
-        "@pika/plugin-ts-standard-pkg",
-        {
-          "exclude": [
-            "@types/*"
-          ]
-        }
+        "@pika/plugin-ts-standard-pkg"
       ],
       [
         "@pika/plugin-build-node"
