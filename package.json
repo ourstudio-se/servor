@@ -20,7 +20,7 @@
     "prepare": "npm run type-check",
     "type-check": "tsc --noEmit --skipLibCheck",
     "version": "npm run build",
-    "start": "sudo npm run build && node cli tests index.html 5000"
+    "start": "sudo npm run build && node cli tests index.html 8080"
   },
   "author": "Luke Jackson <lukejacksonn@gmail.com>",
   "license": "MIT",

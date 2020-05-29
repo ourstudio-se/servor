@@ -40,7 +40,7 @@ Example usage with npm scripts in a `package.json` file after running `npm i ser
     "servor": "4.0.0"
   },
   "scripts": {
-    "start": "servor www index.html 8080"
+    "start": "servor . index.html 8080"
   }
 }
 ```
@@ -72,6 +72,12 @@ The `inject` property accepts a string that gets appended to the servers root do
 ```js
 const config = require('package.json');
 servor({ inject: `<script>window.pkg=${config}</script>` });
+```
+
+or inject a .html file
+```js
+const inject = fs.readFileSync(path.join(__dirname, "sample.html"), "binary")
+servor({ inject });
 ```
 
 ## Notes

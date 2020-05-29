@@ -25,17 +25,15 @@ const Server = async ({
   inject,
   port: _port,
 }: Server) => {
-  let port = 0;
+  let port = _port || envPort || 8080;
   try {
-    port = await usePort(_port || envPort || 5000);
+    port = await usePort(port);
   } catch (e) {
     if (port || process.env.PORT) {
       console.log("[ERR] The port you have specified is already in use!");
       process.exit();
     }
   }
-
-  console.log("ppPort", port);
 
   // Configure globals
 
@@ -108,8 +106,6 @@ const Server = async ({
       return serveRoute(res, decodedPathname);
     })
     .listen(port);
-
-  console.log("IPS", networkIps);
 
   return { url: `http://localhost:${port}`, root, port, ips: networkIps };
 };

@@ -17,6 +17,13 @@ const ips: string[] = [];
 
 export const networkIps = Object.values(os.networkInterfaces()).reduce(
   (prev, current) =>
-    current ? [...prev, ...current.map((x) => x.address)] : prev,
+    current
+      ? [
+          ...prev,
+          ...current
+            .filter((i) => i.family === "IPv4" && i.internal === false)
+            .map((x) => x.address),
+        ]
+      : prev,
   ips
 );

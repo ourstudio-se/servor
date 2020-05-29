@@ -10,7 +10,7 @@
 }
 
 main {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 16px;
   background: #212121;
   height: 100vh;
@@ -43,4 +43,8 @@ h2 {
 
 code {
   display: inline;
+}
+
+p {
+  color: #000;
 }
