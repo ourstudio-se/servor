@@ -46,24 +46,6 @@ const Server = async ({ root: _root = ".", inject, port: _port }: Server) => {
     res.end();
   };
 
-  const sendFile = (
-    res: Response,
-    status: number,
-    file: string,
-    ext: string,
-    encoding: BufferEncoding = "binary"
-  ) => {
-    let buffer: Buffer | undefined;
-    if (["js", "css", "html", "json", "xml", "svg"].includes(ext)) {
-      res.setHeader("content-encoding", "gzip");
-      buffer = zlib.gzipSync(utf8(file));
-      encoding = "utf-8";
-    }
-    res.writeHead(status, { "content-type": getMimeType(ext) });
-    res.write(buffer || file, encoding);
-    res.end();
-  };
-
   const sendString = (
     res: Response,
     status: number,
@@ -72,20 +54,25 @@ const Server = async ({ root: _root = ".", inject, port: _port }: Server) => {
     encoding: BufferEncoding = "binary"
   ) => {
     let buffer: Buffer | undefined;
-    const headers: http.OutgoingHttpHeaders = {
-      "content-type": getMimeType(ext),
-    };
     if (["js", "css", "html", "json", "xml", "svg"].includes(ext)) {
       res.setHeader("content-encoding", "gzip");
+      res.setHeader("charset", "utf-8");
       buffer = zlib.gzipSync(str);
       encoding = "utf-8";
-      headers.charset = "utf-8";
     }
 
-    res.writeHead(status, headers);
+    res.writeHead(status, { "content-type": getMimeType(ext) });
     res.write(buffer || str, encoding);
     res.end();
   };
+
+  const sendFile = (
+    res: Response,
+    status: number,
+    file: string,
+    ext: string,
+    encoding: BufferEncoding = "binary"
+  ) => sendString(res, status, utf8(file), ext, encoding);
 
   // Respond to requests with a file extension
 
