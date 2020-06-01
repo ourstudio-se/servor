@@ -46,23 +46,17 @@ const Server = async ({ root: _root = ".", inject, port: _port }: Server) => {
     res.end();
   };
 
-  const sendString = (
+  const sendInjectedHtml = (
     res: Response,
     status: number,
     str: string,
-    ext: string,
-    encoding: BufferEncoding = "binary"
   ) => {
-    let buffer: Buffer | undefined;
-    if (["js", "css", "html", "json", "xml", "svg"].includes(ext)) {
-      res.setHeader("content-encoding", "gzip");
-      res.setHeader("charset", "utf-8");
-      buffer = zlib.gzipSync(str);
-      encoding = "utf-8";
-    }
-
-    res.writeHead(status, { "content-type": getMimeType(ext) });
-    res.write(buffer || str, encoding);
+    res.writeHead(status, {
+      "content-type": getMimeType("html"),
+      "content-encoding": "gzip",
+      charset: "utf-8",
+    });
+    res.write(zlib.gzipSync(str), "utf-8");
     res.end();
   };
 
@@ -72,7 +66,19 @@ const Server = async ({ root: _root = ".", inject, port: _port }: Server) => {
     file: string,
     ext: string,
     encoding: BufferEncoding = "binary"
-  ) => sendString(res, status, utf8(file), ext, encoding);
+  ) => {
+    let buffer: Buffer | undefined;
+    if (["js", "css", "html", "json", "xml", "svg"].includes(ext)) {
+      res.setHeader("content-encoding", "gzip");
+      res.setHeader("charset", "utf-8");
+      buffer = zlib.gzipSync(utf8(file));
+      encoding = "utf-8";
+    }
+
+    res.writeHead(status, { "content-type": getMimeType(ext) });
+    res.write(buffer || file, encoding);
+    res.end();
+  };
 
   // Respond to requests with a file extension
 
@@ -89,7 +95,7 @@ const Server = async ({ root: _root = ".", inject, port: _port }: Server) => {
 
   const serveRoute = (res: Response) => {
     if (inject) {
-      return sendString(res, 200, inject, "html");
+      return sendInjectedHtml(res, 200, inject);
     }
 
     const index = path.join(root, "index.html");
