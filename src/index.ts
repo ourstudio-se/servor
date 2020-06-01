@@ -38,7 +38,7 @@ const Server = async ({ root: _root = ".", inject, port: _port }: Server) => {
     const a = pathname?.split("/").pop()?.indexOf(".");
     return a === undefined || a === -1;
   };
-  const utf8 = (file: string) => Buffer.from(file, "binary").toString("utf8");
+  const utf8 = (file: string) => Buffer.from(file, "binary").toString("utf-8");
 
   const sendError = (res: Response, status: number) => {
     res.writeHead(status);
@@ -57,7 +57,7 @@ const Server = async ({ root: _root = ".", inject, port: _port }: Server) => {
     if (["js", "css", "html", "json", "xml", "svg"].includes(ext)) {
       res.setHeader("content-encoding", "gzip");
       buffer = zlib.gzipSync(utf8(file));
-      encoding = "utf8";
+      encoding = "utf-8";
     }
     res.writeHead(status, { "content-type": getMimeType(ext) });
     res.write(buffer || file, encoding);
@@ -72,12 +72,17 @@ const Server = async ({ root: _root = ".", inject, port: _port }: Server) => {
     encoding: BufferEncoding = "binary"
   ) => {
     let buffer: Buffer | undefined;
+    const headers: http.OutgoingHttpHeaders = {
+      "content-type": getMimeType(ext),
+    };
     if (["js", "css", "html", "json", "xml", "svg"].includes(ext)) {
       res.setHeader("content-encoding", "gzip");
       buffer = zlib.gzipSync(str);
-      encoding = "utf8";
+      encoding = "utf-8";
+      headers.charset = "utf-8";
     }
-    res.writeHead(status, { "content-type": getMimeType(ext) });
+
+    res.writeHead(status, headers);
     res.write(buffer || str, encoding);
     res.end();
   };
