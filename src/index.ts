@@ -64,6 +64,24 @@ const Server = async ({ root: _root = ".", inject, port: _port }: Server) => {
     res.end();
   };
 
+  const sendString = (
+    res: Response,
+    status: number,
+    str: string,
+    ext: string,
+    encoding: BufferEncoding = "binary"
+  ) => {
+    let buffer: Buffer | undefined;
+    if (["js", "css", "html", "json", "xml", "svg"].includes(ext)) {
+      res.setHeader("content-encoding", "gzip");
+      buffer = zlib.gzipSync(str);
+      encoding = "utf8";
+    }
+    res.writeHead(status, { "content-type": getMimeType(ext) });
+    res.write(buffer || str, encoding);
+    res.end();
+  };
+
   // Respond to requests with a file extension
 
   const serveStaticFile = (res: Response, pathname: string) => {
@@ -78,10 +96,12 @@ const Server = async ({ root: _root = ".", inject, port: _port }: Server) => {
   // Respond to requests without a file extension
 
   const serveRoute = (res: Response) => {
-    const index = path.join(root, "index.html");
+    if (inject) {
+      return sendString(res, 200, inject, "html");
+    }
 
+    const index = path.join(root, "index.html");
     fs.readFile(index, "binary", (err, file) => {
-      if (err && inject) return sendFile(res, 200, inject, "html");
       if (err) return sendError(res, 500);
       file = inject ? file + inject : file;
       return sendFile(res, 200, file, "html");
