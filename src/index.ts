@@ -33,6 +33,11 @@ const Server = async ({ root: _root = ".", inject, port: _port }: Server) => {
 
   const root = _root.startsWith("/") ? _root : path.join(process.cwd(), _root);
 
+  const isAppleAppSiteAssociationRequest = (pathname: string) => {
+    const segments = pathname?.split("/");
+    return segments.pop() === "apple-app-site-association" && segments.pop() == ".well-known";
+  };
+
   // Server utility functions
   const isRouteRequest = (pathname: string) => {
     const a = pathname?.split("/").pop()?.indexOf(".");
@@ -82,9 +87,9 @@ const Server = async ({ root: _root = ".", inject, port: _port }: Server) => {
 
   // Respond to requests with a file extension
 
-  const serveStaticFile = (res: Response, pathname: string) => {
+  const serveStaticFile = (res: Response, pathname: string, extOverride?: string) => {
     const uri = path.join(root, pathname);
-    const ext = uri.replace(/^.*[\.\/\\]/, "").toLowerCase();
+    const ext = extOverride || uri.replace(/^.*[\.\/\\]/, "").toLowerCase();
     if (!fs.existsSync(uri)) return sendError(res, 404);
     fs.readFile(uri, "binary", (err, file) =>
       err ? sendError(res, 500) : sendFile(res, 200, file, ext)
@@ -116,6 +121,8 @@ const Server = async ({ root: _root = ".", inject, port: _port }: Server) => {
       res.setHeader("access-control-allow-origin", "*");
       if (!isRouteRequest(decodedPathname))
         return serveStaticFile(res, decodedPathname);
+      else if (isAppleAppSiteAssociationRequest(decodedPathname))
+        return serveStaticFile(res, decodedPathname, 'json');
       return serveRoute(res);
     })
     .listen(port);
